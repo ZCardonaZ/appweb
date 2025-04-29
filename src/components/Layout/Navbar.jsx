@@ -26,6 +26,12 @@ function Navbar() {
           >
             Formulario
           </Link>
+          <Link 
+            to="/about" 
+            className={location.pathname === '/about' ? 'active' : ''}
+          >
+            Acerca de
+          </Link>
         </div>
       </div>
     </nav>
