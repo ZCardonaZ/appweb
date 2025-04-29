@@ -1,19 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './components/Login/Login';
 import Layout from './components/Layout/Layout';
 import CharacterList from './components/Characters/CharacterList';
 import CharacterDetail from './components/Characters/CharacterDetail';
 import ContactForm from './components/Form/ContactForm';
-import About from './components/About/About';
+import About from './components/About/About'; // Importa About
 import './App.css';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('loggedInUser')); // Inicializa basado en localStorage
-
-  useEffect(() => {
-    setIsLoggedIn(!!localStorage.getItem('loggedInUser'));
-  }, []);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleLogin = () => {
     setIsLoggedIn(true);
@@ -31,7 +27,7 @@ function App() {
               <Route path="characters" element={<CharacterList />} />
               <Route path="characters/:id" element={<CharacterDetail />} />
               <Route path="form" element={<ContactForm />} />
-              <Route path="about" element={<About />} />
+              <Route path="about" element={<About />} />  {/* Nueva ruta */}
             </Route>
           </>
         )}

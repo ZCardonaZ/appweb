@@ -1,6 +1,5 @@
 import { Outlet } from 'react-router-dom';
 import Navbar from './Navbar';
-import DarkModeToggle from '../DarkModeToggle/DarkModeToggle'; // Importa DarkModeToggle
 import './Layout.css';
 
 function Layout() {
@@ -10,7 +9,6 @@ function Layout() {
       <main className="main-content">
         <Outlet />
       </main>
-      <DarkModeToggle />  {/* Agrega DarkModeToggle */}
     </div>
   );
 }
