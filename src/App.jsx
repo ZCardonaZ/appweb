@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './components/Login/Login';
 import Layout from './components/Layout/Layout';
 import CharacterList from './components/Characters/CharacterList';
+import CharacterDetail from './components/Characters/CharacterDetail'; // Importa CharacterDetail
 import ContactForm from './components/Form/ContactForm';
 import './App.css';
 
@@ -23,6 +24,7 @@ function App() {
             <Route path="/" element={<Layout />}>
               <Route index element={<Navigate to="/characters" replace />} />
               <Route path="characters" element={<CharacterList />} />
+              <Route path="characters/:id" element={<CharacterDetail />} />  {/* Nueva ruta */}
               <Route path="form" element={<ContactForm />} />
             </Route>
           </>
