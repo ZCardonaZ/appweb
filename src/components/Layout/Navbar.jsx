@@ -1,9 +1,8 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import './Navbar.css';
 
 function Navbar() {
   const location = useLocation();
-  const navigate = useNavigate();
 
   return (
     <nav className="navbar">
@@ -27,12 +26,12 @@ function Navbar() {
           >
             Formulario
           </Link>
-          <button
-            onClick={() => navigate('/about')}
-            className={`about-button ${location.pathname === '/about' ? 'active' : ''}`}
+          <Link
+            to="/about"
+            className={`nav-button ${location.pathname === '/about' ? 'active' : ''}`}
           >
             Acerca de
-          </button>
+          </Link>
         </div>
       </div>
     </nav>
