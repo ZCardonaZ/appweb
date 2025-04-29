@@ -14,19 +14,8 @@ function Login({ onLogin }) {
       return;
     }
     
-<<<<<<< HEAD
     // Simple validation passed, call the onLogin callback
     onLogin();
-=======
-    // Validación simple (en producción usarías un sistema más seguro)
-    if (password.length < 4) {
-      setError('La contraseña debe tener al menos 4 caracteres');
-      return;
-    }
-    
-    onLogin(username);
-    navigate('/characters');
->>>>>>> parent of d7bce5e (asssssssssssss)
   };
 
   return (
