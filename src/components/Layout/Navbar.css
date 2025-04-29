@@ -29,6 +29,10 @@
 .navbar-links {
   display: flex;
   gap: 2rem;
+  /* Añade estas 3 propiedades clave */
+  min-width: max-content;
+  align-items: center;
+  height: 100%;
 }
 
 .navbar-links a {
@@ -38,6 +42,11 @@
   padding: 0.5rem 0;
   position: relative;
   transition: color 0.2s;
+  /* Añade estas propiedades */
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+  white-space: nowrap;
 }
 
 .navbar-links a:hover {
@@ -70,4 +79,20 @@
     width: 100%;
     justify-content: space-around;
   }
+}
+
+
+/* Debug temporal - Forzar visibilidad */
+.navbar-links a:nth-child(3) {
+  background-color: #3563E9 !important;
+  color: white !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: 4px !important;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
 }
