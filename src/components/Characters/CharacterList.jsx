@@ -36,8 +36,8 @@ function CharacterList() {
     const results = characters.filter(character => {
       // Filtro por nombre
       const nameMatch = 
-        character.name.first.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        character.name.last.toLowerCase().includes(searchTerm.toLowerCase());
+        character.name?.first?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        character.name?.last?.toLowerCase().includes(searchTerm.toLowerCase());
       
       // Filtro por especie
       const speciesMatch = 
@@ -61,7 +61,7 @@ function CharacterList() {
   // Obtener especies únicas de los personajes
   const uniqueSpecies = ['all', ...new Set(
     characters.map(char => char.species).filter(Boolean)
-  ];
+  )];
 
   if (loading) {
     return <div className="loading">Cargando personajes...</div>;
