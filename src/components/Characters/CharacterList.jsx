@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'; // Importa useEffect
+import { useState, useEffect } from 'react';
 import CharacterCard from './CharacterCard';
 import './CharacterList.css';
 
@@ -6,6 +6,7 @@ function CharacterList() {
   const [characters, setCharacters] = useState([]);
   const [filteredCharacters, setFilteredCharacters] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedSpecies, setSelectedSpecies] = useState('Todos'); // Nuevo estado
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -32,27 +33,43 @@ function CharacterList() {
   }, []);
 
   useEffect(() => {
-    // Cargar el término de búsqueda desde localStorage al montar el componente
+    // Cargar los filtros desde localStorage al montar el componente
     const storedSearchTerm = localStorage.getItem('futuramaSearchTerm');
+    const storedSpecies = localStorage.getItem('futuramaSelectedSpecies');
     if (storedSearchTerm) {
       setSearchTerm(storedSearchTerm);
+    }
+    if (storedSpecies) {
+      setSelectedSpecies(storedSpecies);
     }
   }, []);
 
   useEffect(() => {
-    const results = characters.filter(character =>
+    let results = characters.filter(character =>
       character.name.first.toLowerCase().includes(searchTerm.toLowerCase()) ||
       character.name.last.toLowerCase().includes(searchTerm.toLowerCase())
     );
+
+    if (selectedSpecies !== 'Todos') {
+      results = results.filter(character => character.species === selectedSpecies);
+    }
+
     setFilteredCharacters(results);
 
-    // Guardar el término de búsqueda en localStorage cada vez que cambie
+    // Guardar los filtros en localStorage cada vez que cambien
     localStorage.setItem('futuramaSearchTerm', searchTerm);
-  }, [searchTerm, characters]);
+    localStorage.setItem('futuramaSelectedSpecies', selectedSpecies);
+  }, [searchTerm, selectedSpecies, characters]);
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
   };
+
+  const handleSpeciesChange = (e) => {
+    setSelectedSpecies(e.target.value);
+  };
+
+  const uniqueSpecies = ['Todos', ...new Set(characters.map(character => character.species))];
 
   if (loading) {
     return <div className="loading">Cargando personajes...</div>;
@@ -74,6 +91,12 @@ function CharacterList() {
           onChange={handleSearch}
           className="search-input"
         />
+
+        <select value={selectedSpecies} onChange={handleSpeciesChange} className="species-select">
+          {uniqueSpecies.map(species => (
+            <option key={species} value={species}>{species}</option>
+          ))}
+        </select>
       </div>
 
       {filteredCharacters.length === 0 ? (
