@@ -5,23 +5,22 @@ import Layout from './components/Layout/Layout';
 import CharacterList from './components/Characters/CharacterList';
 import CharacterDetail from './components/Characters/CharacterDetail';
 import ContactForm from './components/Form/ContactForm';
+import About from './components/About/About'; // Nuevo componente
 import './App.css';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [characters, setCharacters] = useState([]); // Estado para los personajes
+  const [characters, setCharacters] = useState([]);
 
   const handleLogin = () => {
     setIsLoggedIn(true);
-    // Aquí podrías cargar los personajes si los obtienes después del login
-    // fetchCharacters().then(data => setCharacters(data));
   };
 
   return (
     <BrowserRouter>
       <Routes>
         {!isLoggedIn ? (
-          <Route path="/" element={<Login onLogin={handleLogin} />} />
+          <Route path="/" element={<Login onLogin={handleLogin} />}
         ) : (
           <>
             <Route path="/" element={<Layout />}>
@@ -35,6 +34,7 @@ function App() {
                 element={<CharacterDetail characters={characters} />} 
               />
               <Route path="form" element={<ContactForm />} />
+              <Route path="about" element={<About />} /> {/* Nueva ruta */}
             </Route>
           </>
         )}
