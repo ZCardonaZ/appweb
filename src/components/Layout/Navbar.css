@@ -1,11 +1,10 @@
-/* REEMPLAZA TU ARCHIVO COMPLETO POR ESTO */
 .navbar {
   background-color: #fff;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   position: sticky;
   top: 0;
   z-index: 100;
-  padding: 0 2rem; /* Añadido */
+  padding: 0 2rem;
 }
 
 .navbar-container {
@@ -14,7 +13,7 @@
   align-items: center;
   max-width: 1200px;
   margin: 0 auto;
-  height: 60px; /* Altura fija */
+  height: 70px;
 }
 
 .navbar-logo a {
@@ -28,7 +27,6 @@
   letter-spacing: 1px;
 }
 
-/* CAMBIOS PRINCIPALES AQUÍ */
 .navbar-links {
   display: flex;
   gap: 1.5rem;
@@ -41,37 +39,55 @@
   color: #333;
   font-weight: 500;
   font-size: 1rem;
-  padding: 0.5rem 1rem; /* Más espacio */
-  display: inline-block; /* Cambiado */
+  padding: 0.5rem 0;
+  display: inline-block;
   white-space: nowrap;
   transition: all 0.2s;
+  position: relative;
 }
 
-/* Estilo para el enlace "Acerca de" específicamente */
-.navbar-links a[href="/about"] {
+/* Estilos para el botón "Acerca de" */
+.about-button {
   background-color: #3563E9;
   color: white !important;
+  border: none;
   border-radius: 4px;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-left: 0.5rem;
 }
 
+.about-button:hover {
+  background-color: #2a50c4;
+  transform: translateY(-2px);
+}
+
+.about-button.active {
+  background-color: #1a3a8f;
+  box-shadow: 0 0 0 2px rgba(53, 99, 233, 0.3);
+}
+
+/* Estilos para los enlaces normales */
 .navbar-links a:hover {
   color: #3563E9;
 }
 
 .navbar-links a.active {
   color: #3563E9;
-  position: relative;
 }
 
 .navbar-links a.active::after {
   content: '';
   position: absolute;
   bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80%;
+  left: 0;
+  width: 100%;
   height: 2px;
   background-color: #3563E9;
+  border-radius: 2px;
 }
 
 @media (max-width: 768px) {
@@ -80,11 +96,11 @@
   }
   
   .navbar-links {
-    gap: 0.75rem;
+    gap: 1rem;
   }
   
-  .navbar-links a {
-    padding: 0.5rem;
+  .about-button {
+    padding: 0.5rem 1rem;
     font-size: 0.9rem;
   }
 }
