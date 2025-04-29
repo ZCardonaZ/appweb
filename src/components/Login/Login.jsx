@@ -16,14 +16,13 @@ function Login({ onLogin }) {
       return;
     }
     
+    // Validación simple (en producción usarías un sistema más seguro)
     if (password.length < 4) {
       setError('La contraseña debe tener al menos 4 caracteres');
       return;
     }
     
-    // Llamar a la función onLogin del padre con el nombre de usuario
     onLogin(username);
-    // Redirigir a la página principal
     navigate('/characters');
   };
 
@@ -44,7 +43,6 @@ function Login({ onLogin }) {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder="Ingresa tu usuario"
-              autoFocus
             />
           </div>
           
