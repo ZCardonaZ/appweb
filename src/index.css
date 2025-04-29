@@ -3,9 +3,43 @@
   line-height: 1.5;
   font-weight: 400;
 
+  /* -- Colores Modo Claro (Variables CSS opcionales para facilitar) -- */
+  --color-text-primary-light: #213547;
+  --color-background-light: #f5f7fb;
+  --color-link-light: #3563E9;
+  --color-link-hover-light: #2a50c4;
+  --color-component-bg-light: #ffffff;
+  --color-border-light: #ddd;
+  --color-shadow-light: rgba(0, 0, 0, 0.05);
+  --color-button-bg-light: #f9f9f9;
+  --color-button-border-hover-light: #3563E9;
+  --color-input-bg-light: #ffffff;
+  --color-input-border-light: #ddd;
+  --color-input-focus-border-light: #3563E9;
+  --color-input-focus-shadow-light: rgba(53, 99, 233, 0.2);
+  --color-text-secondary-light: #666;
+
+
+  /* -- Colores Modo Oscuro (Variables CSS opcionales) -- */
+  --color-text-primary-dark: #f5f7fb;
+  --color-background-dark: #1a202c; /* Un poco más oscuro que antes */
+  --color-link-dark: #90cdf4; /* Azul claro */
+  --color-link-hover-dark: #bee3f8;
+  --color-component-bg-dark: #2d3748; /* Gris azulado oscuro */
+  --color-border-dark: #4a5568; /* Gris más oscuro */
+  --color-shadow-dark: rgba(0, 0, 0, 0.3);
+  --color-button-bg-dark: #4a5568;
+  --color-button-border-hover-dark: #90cdf4;
+  --color-input-bg-dark: #2d3748;
+  --color-input-border-dark: #4a5568;
+  --color-input-focus-border-dark: #90cdf4;
+  --color-input-focus-shadow-dark: rgba(144, 205, 244, 0.2);
+  --color-text-secondary-dark: #a0aec0; /* Gris claro */
+
+
   color-scheme: light;
-  color: #213547;
-  background-color: #f5f7fb;
+  color: var(--color-text-primary-light);
+  background-color: var(--color-background-light);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -21,18 +55,20 @@
 
 a {
   font-weight: 500;
-  color: #3563E9;
+  color: var(--color-link-light);
   text-decoration: inherit;
+  transition: color 0.2s; /* Transición suave para hover */
 }
 
 a:hover {
-  color: #2a50c4;
+  color: var(--color-link-hover-light);
 }
 
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease; /* Transición suave para cambio de tema */
 }
 
 h1 {
@@ -52,20 +88,181 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #f9f9f9;
+  background-color: var(--color-button-bg-light);
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: border-color 0.25s, background-color 0.3s ease, color 0.3s ease;
 }
 
 button:hover {
-  border-color: #3563E9;
+  border-color: var(--color-button-border-hover-light);
 }
 
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  outline: 4px auto -webkit-focus-ring-color; /* Considerar ajustar para modo oscuro */
 }
 
 input, button, textarea, select {
   font: inherit;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; /* Transición para inputs */
 }
+
+
+/* --- ESTILOS PARA MODO OSCURO --- */
+
+body.dark-mode {
+  color-scheme: dark;
+  color: var(--color-text-primary-dark);
+  background-color: var(--color-background-dark);
+}
+
+/* Sobrescribe otros estilos generales según sea necesario para el modo oscuro */
+body.dark-mode a {
+   color: var(--color-link-dark);
+}
+body.dark-mode a:hover {
+   color: var(--color-link-hover-dark);
+}
+
+body.dark-mode button {
+    background-color: var(--color-button-bg-dark);
+    color: var(--color-text-primary-dark);
+    border: 1px solid var(--color-border-dark);
+ }
+
+ body.dark-mode button:hover {
+     border-color: var(--color-button-border-hover-dark);
+ }
+
+ /* --- Estilos Específicos de Componentes en Modo Oscuro --- */
+
+ /* Fondos de Contenedores Principales */
+ body.dark-mode .character-card,
+ body.dark-mode .character-detail-container,
+ body.dark-mode .form-container,
+ body.dark-mode .about-container,
+ body.dark-mode .navbar,
+ body.dark-mode .loading,
+ body.dark-mode .error,
+ body.dark-mode .no-results,
+ body.dark-mode .menu /* Menú desplegable usuario */ {
+   background-color: var(--color-component-bg-dark);
+   color: var(--color-text-primary-dark); /* Asegura que el texto dentro sea legible */
+   box-shadow: 0 4px 12px var(--color-shadow-dark);
+ }
+
+ /* Títulos dentro de componentes */
+ body.dark-mode .character-card h2,
+ body.dark-mode .character-list h1, /* Título de la lista */
+ body.dark-mode .character-detail-container h1,
+ body.dark-mode .form-container h1,
+ body.dark-mode .about-container h1,
+ body.dark-mode .about-text h2 {
+    color: var(--color-text-primary-dark);
+ }
+
+ /* Texto secundario, párrafos, labels, enlaces de navbar */
+  body.dark-mode .character-info p,
+  body.dark-mode .character-detail-info p,
+  body.dark-mode .about-text p,
+  body.dark-mode .about-text li,
+  body.dark-mode .navbar-links a,
+  body.dark-mode .user-button,
+  body.dark-mode .menu button,
+  body.dark-mode .form-group label,
+  body.dark-mode .loading,
+  body.dark-mode .error,
+  body.dark-mode .no-results {
+      color: var(--color-text-secondary-dark);
+  }
+
+  body.dark-mode .navbar-links a.active {
+      color: var(--color-link-dark); /* Color activo en navbar */
+  }
+   body.dark-mode .navbar-links a.active::after {
+      background-color: var(--color-link-dark);
+   }
+  body.dark-mode .menu button:hover {
+      background-color: var(--color-background-dark); /* Fondo hover menú usuario */
+  }
+
+
+  /* Inputs, Textarea, Select */
+  body.dark-mode input,
+  body.dark-mode textarea,
+  body.dark-mode select {
+     background-color: var(--color-input-bg-dark);
+     color: var(--color-text-primary-dark);
+     border: 1px solid var(--color-input-border-dark);
+  }
+  body.dark-mode input::placeholder,
+  body.dark-mode textarea::placeholder {
+       color: var(--color-text-secondary-dark);
+       opacity: 0.7;
+  }
+
+  body.dark-mode input:focus,
+  body.dark-mode textarea:focus,
+  body.dark-mode select:focus {
+    border-color: var(--color-input-focus-border-dark);
+    outline: none;
+    box-shadow: 0 0 0 2px var(--color-input-focus-shadow-dark);
+  }
+
+  /* Errores en formulario */
+  body.dark-mode .form-group input.error,
+  body.dark-mode .form-group textarea.error {
+    border-color: #e53e3e; /* Mantener rojo para errores */
+  }
+
+  body.dark-mode .error-text {
+    color: #e53e3e;
+  }
+
+  /* Mensaje de éxito */
+   body.dark-mode .success-message {
+    background-color: #2d573a; /* Verde oscuro */
+    color: #c6f6d5; /* Verde claro */
+    border-left-color: #68d391;
+   }
+
+  /* Botón Submit (más específico si es necesario) */
+   body.dark-mode .submit-button {
+      background-color: var(--color-link-dark);
+      color: var(--color-background-dark); /* Texto oscuro sobre botón claro */
+   }
+   body.dark-mode .submit-button:hover {
+      background-color: var(--color-link-hover-dark);
+   }
+
+  /* Navbar Logo (si quieres cambiarlo) */
+   body.dark-mode .logo-text {
+      color: var(--color-link-dark);
+   }
+
+  /* Character Card Hover */
+   body.dark-mode .character-card:hover {
+      box-shadow: 0 8px 16px var(--color-shadow-dark);
+   }
+
+  /* Specific Login Styles if needed */
+  body.dark-mode .login-card {
+     background-color: var(--color-component-bg-dark);
+  }
+  body.dark-mode .login-card h1,
+  body.dark-mode .login-subtitle,
+  body.dark-mode .form-group label {
+       color: var(--color-text-primary-dark);
+  }
+  body.dark-mode .login-button {
+     background-color: var(--color-link-dark);
+     color: var(--color-background-dark);
+  }
+   body.dark-mode .login-button:hover {
+      background-color: var(--color-link-hover-dark);
+   }
+   body.dark-mode .error-message {
+      background-color: #582c2c; /* Fondo oscuro para error */
+      color: #fed7d7; /* Texto claro para error */
+      border-left-color: #e53e3e;
+   }
