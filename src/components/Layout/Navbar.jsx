@@ -1,8 +1,10 @@
 import { Link, useLocation } from 'react-router-dom';
+import { useState } from 'react';
 import './Navbar.css';
 
-function Navbar() {
+function Navbar({ username, onLogout }) {
   const location = useLocation();
+  const [showDropdown, setShowDropdown] = useState(false);
 
   return (
     <nav className="navbar">
@@ -32,6 +34,33 @@ function Navbar() {
           >
             Acerca de
           </Link>
+          
+          {username && (
+            <div className="user-menu-container">
+              <button 
+                className="user-button"
+                onClick={() => setShowDropdown(!showDropdown)}
+                onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
+              >
+                {username}
+                <span className="dropdown-arrow">▼</span>
+              </button>
+              
+              {showDropdown && (
+                <div className="dropdown-menu">
+                  <button 
+                    className="dropdown-item"
+                    onClick={() => {
+                      onLogout();
+                      setShowDropdown(false);
+                    }}
+                  >
+                    Cerrar sesión
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </nav>
