@@ -1,4 +1,4 @@
-/* Reset default styles from template */
+/* src/App.css */
 #root {
   max-width: none;
   margin: 0;
@@ -10,4 +10,6 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background-color: var(--color-bg);
+  color: var(--color-text);
 }
