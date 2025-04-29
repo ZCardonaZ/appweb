@@ -16,7 +16,7 @@ function Navbar() {
         <div className="navbar-links">
           <Link 
             to="/characters" 
-            className={location.pathname === '/characters' ? 'active' : ''}
+            className={location.pathname.startsWith('/characters') ? 'active' : ''}
           >
             Personajes
           </Link>
@@ -26,6 +26,12 @@ function Navbar() {
           >
             Formulario
           </Link>
+          <Link 
+            to="/about" 
+            className={location.pathname === '/about' ? 'active' : ''}
+          >
+            Acerca de
+          </Link> {/* Nuevo enlace */}
         </div>
       </div>
     </nav>
