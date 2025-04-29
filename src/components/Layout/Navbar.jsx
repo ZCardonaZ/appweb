@@ -1,11 +1,11 @@
 import { Link, useLocation } from 'react-router-dom';
-import { useState, useEffect } from 'react'; // Importa useState y useEffect
+import { useState, useEffect } from 'react';
 import './Navbar.css';
 
 function Navbar() {
   const location = useLocation();
-  const [showMenu, setShowMenu] = useState(false); // Estado para mostrar/ocultar el menú
-  const [loggedInUser, setLoggedInUser] = useState(''); // Estado para el nombre del usuario
+  const [showMenu, setShowMenu] = useState(false);
+  const [loggedInUser, setLoggedInUser] = useState('');
 
   useEffect(() => {
     const user = localStorage.getItem('loggedInUser');
@@ -20,7 +20,7 @@ function Navbar() {
 
   const handleLogout = () => {
     localStorage.removeItem('loggedInUser');
-    window.location.href = '/'; // Recarga la página para forzar el Login
+    window.location.href = '/';
   };
 
   return (
@@ -44,6 +44,12 @@ function Navbar() {
             className={location.pathname === '/form' ? 'active' : ''}
           >
             Formulario
+          </Link>
+          <Link
+            to="/about"
+            className={location.pathname === '/about' ? 'active' : ''}
+          >
+            Acerca de
           </Link>
           {loggedInUser && (
             <div className="user-menu">
