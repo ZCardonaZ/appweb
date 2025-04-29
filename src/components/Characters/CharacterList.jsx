@@ -5,10 +5,21 @@ import './CharacterList.css';
 function CharacterList() {
   const [characters, setCharacters] = useState([]);
   const [filteredCharacters, setFilteredCharacters] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedSpecies, setSelectedSpecies] = useState('');
+  // Inicializar los estados leyendo del localStorage
+  const [searchTerm, setSearchTerm] = useState(
+    () => localStorage.getItem('futuramaSearchTerm') || ''
+  );
+  const [selectedSpecies, setSelectedSpecies] = useState(
+    () => localStorage.getItem('futuramaSelectedSpecies') || ''
+  );
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  // Guardar los filtros en localStorage cuando cambien
+  useEffect(() => {
+    localStorage.setItem('futuramaSearchTerm', searchTerm);
+    localStorage.setItem('futuramaSelectedSpecies', selectedSpecies);
+  }, [searchTerm, selectedSpecies]);
 
   useEffect(() => {
     const fetchCharacters = async () => {
@@ -61,16 +72,11 @@ function CharacterList() {
     setSelectedSpecies(e.target.value);
   };
 
-  // components/Characters/CharacterList.jsx
-const CharacterList = ({ characters }) => {
-  return (
-    <div className="character-list">
-      {characters.map((character, index) => (
-        <CharacterCard key={index} character={character} index={index} />
-      ))}
-    </div>
-  );
-};
+  // Función para limpiar los filtros
+  const handleClearFilters = () => {
+    setSearchTerm('');
+    setSelectedSpecies('');
+  };
 
   // Extraer todas las especies únicas de los personajes
   const allSpecies = [...new Set(characters.map(character => character.species))];
@@ -112,6 +118,15 @@ const CharacterList = ({ characters }) => {
             ))}
           </select>
         </div>
+
+        {(searchTerm || selectedSpecies) && (
+          <button 
+            className="clear-filters" 
+            onClick={handleClearFilters}
+          >
+            Limpiar filtros
+          </button>
+        )}
       </div>
       
       {filteredCharacters.length === 0 ? (
