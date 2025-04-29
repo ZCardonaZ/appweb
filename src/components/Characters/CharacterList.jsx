@@ -20,6 +20,8 @@ function CharacterList() {
         }
         
         const data = await response.json();
+        // Verifica la estructura de los datos
+        console.log('Datos de la API:', data);
         setCharacters(data);
         setFilteredCharacters(data);
         setLoading(false);
@@ -38,16 +40,18 @@ function CharacterList() {
     // Aplicar filtro de búsqueda
     if (searchTerm) {
       results = results.filter(character =>
-        character.name.first.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        character.name.last.toLowerCase().includes(searchTerm.toLowerCase())
+        character.name?.first?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        character.name?.last?.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
     
-    // Aplicar filtro por especie
+    // Aplicar filtro por especie (con verificación de existencia)
     if (selectedSpecies) {
-      results = results.filter(character => 
-        character.species.toLowerCase() === selectedSpecies.toLowerCase()
-      );
+      results = results.filter(character => {
+        // Verifica si existe la propiedad species y coincide (case insensitive)
+        return character.species && 
+               character.species.toLowerCase() === selectedSpecies.toLowerCase();
+      });
     }
     
     setFilteredCharacters(results);
@@ -61,8 +65,12 @@ function CharacterList() {
     setSelectedSpecies(e.target.value);
   };
 
-  // Extraer todas las especies únicas de los personajes
-  const allSpecies = [...new Set(characters.map(character => character.species))];
+  // Extraer todas las especies únicas de los personajes (con verificación)
+  const allSpecies = [...new Set(
+    characters
+      .map(character => character.species)
+      .filter(species => species) // Filtra especies undefined/null
+  )];
 
   if (loading) {
     return <div className="loading">Cargando personajes...</div>;
@@ -103,8 +111,19 @@ function CharacterList() {
         </div>
       </div>
       
+      {/* Mensaje de depuración */}
+      {selectedSpecies && (
+        <div className="debug-info">
+          Filtrado por especie: "{selectedSpecies}" | 
+          Personajes encontrados: {filteredCharacters.length}
+        </div>
+      )}
+      
       {filteredCharacters.length === 0 ? (
-        <div className="no-results">No se encontraron personajes con esos filtros</div>
+        <div className="no-results">
+          No se encontraron personajes con esos filtros. <br />
+          Especies disponibles: {allSpecies.join(', ')}
+        </div>
       ) : (
         <div className="character-grid">
           {filteredCharacters.map(character => (
