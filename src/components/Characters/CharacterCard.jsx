@@ -1,19 +1,12 @@
-// components/Characters/CharacterCard.jsx
-import { Link } from "react-router-dom";
-
-const CharacterCard = ({ character, index }) => {
-  // Formatea el nombre completo como en tu versión
-  const fullName = `${character.name.first} ${character.name.middle || ''} ${character.name.last}`.trim();
+function CharacterCard({ character }) {
+  const { name, images, species } = character;
+  const fullName = `${name.first} ${name.middle || ''} ${name.last}`.trim();
   
   return (
-    <Link 
-    to={`/characters/${character.id}`} 
-      className="character-card"
-      aria-label={`Ver detalles de ${fullName}`}
-    >
+    <div className="character-card">
       <div className="character-image">
         <img 
-          src={character.images.main} 
+          src={images.main} 
           alt={fullName}
           onError={(e) => {
             e.target.onerror = null;
@@ -23,10 +16,10 @@ const CharacterCard = ({ character, index }) => {
       </div>
       <div className="character-info">
         <h2>{fullName}</h2>
-        <p>Especie: {character.species}</p>
+        <p>Especie: {species}</p>
       </div>
-    </Link>
+    </div>
   );
-};
+}
 
 export default CharacterCard;

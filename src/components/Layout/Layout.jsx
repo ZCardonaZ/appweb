@@ -2,10 +2,10 @@ import { Outlet } from 'react-router-dom';
 import Navbar from './Navbar';
 import './Layout.css';
 
-function Layout({ username, onLogout }) {
+function Layout() {
   return (
     <div className="layout">
-      <Navbar username={username} onLogout={onLogout} />
+      <Navbar />
       <main className="main-content">
         <Outlet />
       </main>

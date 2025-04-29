@@ -1,15 +1,8 @@
 import { Link, useLocation } from 'react-router-dom';
-import { useState } from 'react';
 import './Navbar.css';
 
-function Navbar({ username, onLogout }) {
+function Navbar() {
   const location = useLocation();
-  const [showDropdown, setShowDropdown] = useState(false);
-
-  const handleLogout = () => {
-    onLogout();
-    setShowDropdown(false);
-  };
 
   return (
     <nav className="navbar">
@@ -23,7 +16,7 @@ function Navbar({ username, onLogout }) {
         <div className="navbar-links">
           <Link 
             to="/characters" 
-            className={location.pathname.startsWith('/characters') ? 'active' : ''}
+            className={location.pathname === '/characters' ? 'active' : ''}
           >
             Personajes
           </Link>
@@ -33,36 +26,6 @@ function Navbar({ username, onLogout }) {
           >
             Formulario
           </Link>
-          <Link
-            to="/about"
-            className={location.pathname === '/about' ? 'active' : ''}
-          >
-            Acerca de
-          </Link>
-          
-          {username && (
-            <div className="user-menu-container">
-              <button 
-                className="user-button"
-                onClick={() => setShowDropdown(!showDropdown)}
-                onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
-              >
-                {username}
-                <span className="dropdown-arrow">▼</span>
-              </button>
-              
-              {showDropdown && (
-                <div className="dropdown-menu">
-                  <button 
-                    className="dropdown-item"
-                    onClick={handleLogout}
-                  >
-                    Cerrar sesión
-                  </button>
-                </div>
-              )}
-            </div>
-          )}
         </div>
       </div>
     </nav>
