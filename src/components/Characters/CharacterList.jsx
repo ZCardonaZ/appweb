@@ -6,6 +6,7 @@ function CharacterList() {
   const [characters, setCharacters] = useState([]);
   const [filteredCharacters, setFilteredCharacters] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedSpecies, setSelectedSpecies] = useState('all');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -32,16 +33,35 @@ function CharacterList() {
   }, []);
 
   useEffect(() => {
-    const results = characters.filter(character =>
-      character.name.first.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      character.name.last.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const results = characters.filter(character => {
+      // Filtro por nombre
+      const nameMatch = 
+        character.name.first.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        character.name.last.toLowerCase().includes(searchTerm.toLowerCase());
+      
+      // Filtro por especie
+      const speciesMatch = 
+        selectedSpecies === 'all' || 
+        character.species?.toLowerCase() === selectedSpecies.toLowerCase();
+      
+      return nameMatch && speciesMatch;
+    });
+    
     setFilteredCharacters(results);
-  }, [searchTerm, characters]);
+  }, [searchTerm, selectedSpecies, characters]);
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
   };
+
+  const handleSpeciesChange = (e) => {
+    setSelectedSpecies(e.target.value);
+  };
+
+  // Obtener especies únicas de los personajes
+  const uniqueSpecies = ['all', ...new Set(
+    characters.map(char => char.species).filter(Boolean)
+  ];
 
   if (loading) {
     return <div className="loading">Cargando personajes...</div>;
@@ -55,7 +75,7 @@ function CharacterList() {
     <div className="character-container">
       <h1>Personajes de Futurama</h1>
       
-      <div className="search-container">
+      <div className="filters-container">
         <input
           type="text"
           placeholder="Buscar personaje por nombre"
@@ -63,10 +83,22 @@ function CharacterList() {
           onChange={handleSearch}
           className="search-input"
         />
+        
+        <select
+          value={selectedSpecies}
+          onChange={handleSpeciesChange}
+          className="species-filter"
+        >
+          {uniqueSpecies.map(species => (
+            <option key={species} value={species}>
+              {species === 'all' ? 'Todas las especies' : species}
+            </option>
+          ))}
+        </select>
       </div>
       
       {filteredCharacters.length === 0 ? (
-        <div className="no-results">No se encontraron personajes con ese nombre</div>
+        <div className="no-results">No se encontraron personajes con esos criterios</div>
       ) : (
         <div className="character-grid">
           {filteredCharacters.map(character => (
