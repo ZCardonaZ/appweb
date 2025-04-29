@@ -1,0 +1,23 @@
+.dark-mode-toggle {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 1000; /* Asegura que esté encima de otros elementos */
+  }
+  
+  .dark-mode-toggle:hover {
+    transform: scale(1.1);
+  }
+  
+  @media (max-width: 480px) {
+    .dark-mode-toggle {
+      bottom: 1rem;
+      right: 1rem;
+      font-size: 1.5rem;
+    }
+  }

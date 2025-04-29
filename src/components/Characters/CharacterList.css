@@ -2,32 +2,36 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  background-color: var(--color-bg); /* Modo oscuro */
+  color: var(--color-text); /* Modo oscuro */
+  transition: background-color 0.3s, color 0.3s; /* Transición suave */
 }
 
 .character-container h1 {
-  color: #333;
-  margin-bottom: 0.5rem;
+  color: var(--color-text); /* Modo oscuro */
 }
 
 .search-container {
   margin-bottom: 1rem;
   display: flex;
-  gap: 1rem; /* Espacio entre el input y el select */
-  align-items: center; /* Alinea verticalmente los elementos */
+  gap: 1rem;
+  align-items: center;
 }
 
 .search-input {
   width: 100%;
-  max-width: 300px; /* Reducido el ancho máximo */
+  max-width: 300px;
   padding: 0.75rem 1rem;
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 1rem;
-  transition: all 0.2s;
+  transition: all 0.2s, background-color 0.3s, color 0.3s; /* Transición suave */
+  background-color: var(--color-card-bg); /* Modo oscuro */
+  color: var(--color-text); /* Modo oscuro */
 }
 
 .search-input:focus {
-  border-color: #3563E9;
+  border-color: var(--color-primary);
   outline: none;
   box-shadow: 0 0 0 2px rgba(53, 99, 233, 0.2);
 }
@@ -37,12 +41,14 @@
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 1rem;
-  transition: border-color 0.2s, box-shadow 0.2s;
-  cursor: pointer; /* Cambia el cursor para indicar que es interactivo */
+  transition: border-color 0.2s, box-shadow 0.2s, background-color 0.3s, color 0.3s; /* Transición suave */
+  cursor: pointer;
+  background-color: var(--color-card-bg); /* Modo oscuro */
+  color: var(--color-text); /* Modo oscuro */
 }
 
 .species-select:focus {
-  border-color: #3563E9;
+  border-color: var(--color-primary);
   outline: none;
   box-shadow: 0 0 0 2px rgba(53, 99, 233, 0.2);
 }
@@ -54,11 +60,12 @@
 }
 
 .character-card {
-  background-color: white;
+  background-color: var(--color-card-bg); /* Modo oscuro */
+  color: var(--color-text); /* Modo oscuro */
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 12px var(--color-shadow); /* Modo oscuro */
+  transition: transform 0.2s, box-shadow 0.2s, background-color 0.3s, color 0.3s; /* Transición suave */
 }
 
 .character-card:hover {
@@ -89,7 +96,7 @@
 .character-info h2 {
   font-size: 1.25rem;
   margin-bottom: 0.5rem;
-  color: #333;
+  color: var(--color-text); /* Modo oscuro */
 }
 
 .character-info p {
@@ -102,13 +109,15 @@
 .no-results {
   text-align: center;
   padding: 2rem;
-  background-color: white;
+  background-color: var(--color-card-bg); /* Modo oscuro */
+  color: var(--color-text); /* Modo oscuro */
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 12px var(--color-shadow); /* Modo oscuro */
+  transition: background-color 0.3s, color 0.3s; /* Transición suave */
 }
 
 .loading {
-  color: #3563E9;
+  color: var(--color-primary);
 }
 
 .error {
@@ -142,6 +151,6 @@
   }
 
   .species-select {
-    width: 100%; /* El select ocupa todo el ancho en pantallas pequeñas */
+    width: 100%;
   }
 }
