@@ -15,9 +15,7 @@ function CharacterList() {
       try {
         const response = await fetch('https://api.sampleapis.com/futurama/characters');
         
-        if (!response.ok) {
-          throw new Error('Error al obtener los personajes');
-        }
+        if (!response.ok) throw new Error('Error al obtener los personajes');
         
         const data = await response.json();
         setCharacters(data);
@@ -34,12 +32,10 @@ function CharacterList() {
 
   useEffect(() => {
     const results = characters.filter(character => {
-      // Filtro por nombre
       const nameMatch = 
         character.name?.first?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         character.name?.last?.toLowerCase().includes(searchTerm.toLowerCase());
       
-      // Filtro por especie
       const speciesMatch = 
         selectedSpecies === 'all' || 
         character.species?.toLowerCase() === selectedSpecies.toLowerCase();
@@ -50,26 +46,13 @@ function CharacterList() {
     setFilteredCharacters(results);
   }, [searchTerm, selectedSpecies, characters]);
 
-  const handleSearch = (e) => {
-    setSearchTerm(e.target.value);
-  };
-
-  const handleSpeciesChange = (e) => {
-    setSelectedSpecies(e.target.value);
-  };
-
-  // Obtener especies únicas de los personajes
-  const uniqueSpecies = ['all', ...new Set(
+  // Obtener especies únicas
+  const speciesOptions = ['all', ...new Set(
     characters.map(char => char.species).filter(Boolean)
   )];
 
-  if (loading) {
-    return <div className="loading">Cargando personajes...</div>;
-  }
-
-  if (error) {
-    return <div className="error">Error: {error}</div>;
-  }
+  if (loading) return <div className="loading">Cargando personajes...</div>;
+  if (error) return <div className="error">Error: {error}</div>;
 
   return (
     <div className="character-container">
@@ -80,16 +63,17 @@ function CharacterList() {
           type="text"
           placeholder="Buscar personaje por nombre"
           value={searchTerm}
-          onChange={handleSearch}
+          onChange={(e) => setSearchTerm(e.target.value)}
           className="search-input"
         />
         
         <select
           value={selectedSpecies}
-          onChange={handleSpeciesChange}
+          onChange={(e) => setSelectedSpecies(e.target.value)}
           className="species-filter"
+          aria-label="Filtrar por especie"
         >
-          {uniqueSpecies.map(species => (
+          {speciesOptions.map(species => (
             <option key={species} value={species}>
               {species === 'all' ? 'Todas las especies' : species}
             </option>
@@ -97,15 +81,15 @@ function CharacterList() {
         </select>
       </div>
       
-      {filteredCharacters.length === 0 ? (
-        <div className="no-results">No se encontraron personajes con esos criterios</div>
-      ) : (
-        <div className="character-grid">
-          {filteredCharacters.map(character => (
+      <div className="character-grid">
+        {filteredCharacters.length > 0 ? (
+          filteredCharacters.map(character => (
             <CharacterCard key={character.id} character={character} />
-          ))}
-        </div>
-      )}
+          ))
+        ) : (
+          <div className="no-results">No se encontraron personajes</div>
+        )}
+      </div>
     </div>
   );
 }

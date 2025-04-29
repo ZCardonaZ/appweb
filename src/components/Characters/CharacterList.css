@@ -1,68 +1,64 @@
 .character-container {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  padding: 1rem;
   max-width: 1200px;
   margin: 0 auto;
+  padding: 2rem;
 }
 
 .character-container h1 {
-  color: #333;
-  margin-bottom: 0.5rem;
-  text-align: center;
-  font-size: 2rem;
   color: #3563E9;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
 }
 
 .filters-container {
   display: flex;
-  gap: 1rem;
-  margin-bottom: 2rem;
-  flex-wrap: wrap;
   justify-content: center;
-  background-color: #f5f7fa;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
   padding: 1.5rem;
+  background: #f8fafc;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.search-input, .species-filter {
+  padding: 0.8rem 1.2rem;
+  font-size: 1rem;
+  border: 2px solid #e2e8f0;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: all 0.2s;
 }
 
 .search-input {
-  min-width: 250px;
-  padding: 0.75rem 1rem;
-  border: 2px solid #ddd;
-  border-radius: 6px;
-  font-size: 1rem;
-  transition: all 0.2s;
-}
-
-.search-input:focus {
-  border-color: #3563E9;
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(53, 99, 233, 0.2);
+  min-width: 300px;
 }
 
 .species-filter {
-  min-width: 200px;
-  padding: 0.75rem 1rem;
-  border: 2px solid #ddd;
-  border-radius: 6px;
-  font-size: 1rem;
-  background-color: white;
+  min-width: 220px;
   cursor: pointer;
-  transition: all 0.2s;
 }
 
-.species-filter:focus {
-  border-color: #3563E9;
+.search-input:focus, .species-filter:focus {
   outline: none;
+  border-color: #3563E9;
   box-shadow: 0 0 0 3px rgba(53, 99, 233, 0.2);
 }
 
 .character-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 2rem;
 }
 
-/* Resto de tus estilos existentes... */
+/* Estilos para móvil */
+@media (max-width: 768px) {
+  .filters-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .search-input, .species-filter {
+    width: 100%;
+  }
+}
