@@ -12,8 +12,7 @@ function About() {
           <p>
             Hola, soy Santiago Cardona, estudiante de USB CALI.
             Me apasiona el desarrollo web y la creación de aplicaciones innovadoras.
-            Este proyecto de Futurama es una muestra de mis habilidades y mi interés
-            en aplicar lo aprendido en un contexto práctico.
+            Este proyecto de Futurama.
           </p>
           <p>
             Algunas de las tecnologías que he utilizado en este proyecto incluyen:
