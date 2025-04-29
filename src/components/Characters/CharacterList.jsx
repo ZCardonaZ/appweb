@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'; // Importa useEffect
 import CharacterCard from './CharacterCard';
 import './CharacterList.css';
 
@@ -6,7 +6,6 @@ function CharacterList() {
   const [characters, setCharacters] = useState([]);
   const [filteredCharacters, setFilteredCharacters] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedSpecies, setSelectedSpecies] = useState('Todos'); // Nuevo estado
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -33,27 +32,27 @@ function CharacterList() {
   }, []);
 
   useEffect(() => {
-    let results = characters.filter(character =>
+    // Cargar el término de búsqueda desde localStorage al montar el componente
+    const storedSearchTerm = localStorage.getItem('futuramaSearchTerm');
+    if (storedSearchTerm) {
+      setSearchTerm(storedSearchTerm);
+    }
+  }, []);
+
+  useEffect(() => {
+    const results = characters.filter(character =>
       character.name.first.toLowerCase().includes(searchTerm.toLowerCase()) ||
       character.name.last.toLowerCase().includes(searchTerm.toLowerCase())
     );
-
-    if (selectedSpecies !== 'Todos') {
-      results = results.filter(character => character.species === selectedSpecies);
-    }
-
     setFilteredCharacters(results);
-  }, [searchTerm, selectedSpecies, characters]);
+
+    // Guardar el término de búsqueda en localStorage cada vez que cambie
+    localStorage.setItem('futuramaSearchTerm', searchTerm);
+  }, [searchTerm, characters]);
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
   };
-
-  const handleSpeciesChange = (e) => {
-    setSelectedSpecies(e.target.value);
-  };
-
-  const uniqueSpecies = ['Todos', ...new Set(characters.map(character => character.species))]; // Obtener especies únicas
 
   if (loading) {
     return <div className="loading">Cargando personajes...</div>;
@@ -75,12 +74,6 @@ function CharacterList() {
           onChange={handleSearch}
           className="search-input"
         />
-
-        <select value={selectedSpecies} onChange={handleSpeciesChange} className="species-select">  {/* Nuevo desplegable */}
-          {uniqueSpecies.map(species => (
-            <option key={species} value={species}>{species}</option>
-          ))}
-        </select>
       </div>
 
       {filteredCharacters.length === 0 ? (
