@@ -1,10 +1,12 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
 function Login({ onLogin }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -14,14 +16,19 @@ function Login({ onLogin }) {
       return;
     }
     
-    // Simple validation passed, call the onLogin callback
-    onLogin();
+    if (password.length < 4) {
+      setError('La contraseña debe tener al menos 4 caracteres');
+      return;
+    }
+    
+    onLogin(username);
+    navigate('/characters', { replace: true });
   };
 
   return (
     <div className="login-container">
       <div className="login-card">
-        <h1>Bienvenido</h1>
+        <h1>Bienvenido a Futurama</h1>
         <p className="login-subtitle">Ingresa tus credenciales para continuar</p>
         
         <form onSubmit={handleSubmit} className="login-form">
@@ -35,6 +42,7 @@ function Login({ onLogin }) {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder="Ingresa tu usuario"
+              autoFocus
             />
           </div>
           

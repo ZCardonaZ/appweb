@@ -6,6 +6,11 @@ function Navbar({ username, onLogout }) {
   const location = useLocation();
   const [showDropdown, setShowDropdown] = useState(false);
 
+  const handleLogout = () => {
+    onLogout();
+    setShowDropdown(false);
+  };
+
   return (
     <nav className="navbar">
       <div className="navbar-container">
@@ -30,7 +35,7 @@ function Navbar({ username, onLogout }) {
           </Link>
           <Link
             to="/about"
-            className={`nav-button ${location.pathname === '/about' ? 'active' : ''}`}
+            className={location.pathname === '/about' ? 'active' : ''}
           >
             Acerca de
           </Link>
@@ -50,10 +55,7 @@ function Navbar({ username, onLogout }) {
                 <div className="dropdown-menu">
                   <button 
                     className="dropdown-item"
-                    onClick={() => {
-                      onLogout();
-                      setShowDropdown(false);
-                    }}
+                    onClick={handleLogout}
                   >
                     Cerrar sesión
                   </button>

@@ -1,63 +1,66 @@
-import { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import Login from './components/Login/Login';
+import { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './components/Layout/Layout';
+import Login from './components/Login/Login';
 import CharacterList from './components/Characters/CharacterList';
 import CharacterDetail from './components/Characters/CharacterDetail';
-import ContactForm from './components/Form/ContactForm';
 import About from './components/About/About';
+import ContactForm from './components/Form/ContactForm';
 import './App.css';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [username, setUsername] = useState('');
-  const [characters, setCharacters] = useState([]);
 
-  useEffect(() => {
-    // Verificar si hay un usuario guardado al cargar la aplicación
-    const storedUsername = localStorage.getItem('username');
-    if (storedUsername) {
-      setIsLoggedIn(true);
-      setUsername(storedUsername);
-    }
-  }, []);
-
-  const handleLogin = (user) => {
-    localStorage.setItem('username', user);
-    setIsLoggedIn(true);
-    setUsername(user);
+  const handleLogin = (username) => {
+    setIsAuthenticated(true);
+    setUsername(username);
+    localStorage.setItem('isAuthenticated', 'true');
+    localStorage.setItem('username', username);
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('username');
-    setIsLoggedIn(false);
+    setIsAuthenticated(false);
     setUsername('');
+    localStorage.removeItem('isAuthenticated');
+    localStorage.removeItem('username');
   };
 
+  // Verificar autenticación al cargar
+  useState(() => {
+    const storedAuth = localStorage.getItem('isAuthenticated');
+    const storedUser = localStorage.getItem('username');
+    if (storedAuth === 'true' && storedUser) {
+      setIsAuthenticated(true);
+      setUsername(storedUser);
+    }
+  }, []);
+
   return (
-    <BrowserRouter>
+    <Router>
       <Routes>
-        <Route 
-          path="/login" 
-          element={!isLoggedIn ? 
+        <Route path="/login" element={
+          !isAuthenticated ? 
             <Login onLogin={handleLogin} /> : 
-            <Navigate to="/characters" replace />} 
-        />
-        <Route 
-          path="/" 
-          element={isLoggedIn ? 
-            <Layout username={username} onLogout={handleLogout} /> : 
-            <Navigate to="/login" replace />}
-        >
-          <Route index element={<Navigate to="/characters" replace />} />
-          <Route path="characters" element={<CharacterList characters={characters} />} />
-          <Route path="characters/:id" element={<CharacterDetail characters={characters} />} />
-          <Route path="form" element={<ContactForm />} />
-          <Route path="about" element={<About />} />
-        </Route>
-        <Route path="*" element={<Navigate to={isLoggedIn ? "/characters" : "/login"} replace />} />
+            <Navigate to="/characters" replace />
+        } />
+        
+        <Route path="/*" element={
+          isAuthenticated ? 
+            <Layout username={username} onLogout={handleLogout}>
+              <Routes>
+                <Route path="/characters" element={<CharacterList />} />
+                <Route path="/characters/:id" element={<CharacterDetail />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/form" element={<ContactForm />} />
+                <Route path="/" element={<Navigate to="/characters" replace />} />
+                <Route path="*" element={<Navigate to="/characters" replace />} />
+              </Routes>
+            </Layout> : 
+            <Navigate to="/login" replace />
+        } />
       </Routes>
-    </BrowserRouter>
+    </Router>
   );
 }
 
