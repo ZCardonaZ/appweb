@@ -61,6 +61,17 @@ function CharacterList() {
     setSelectedSpecies(e.target.value);
   };
 
+  // components/Characters/CharacterList.jsx
+const CharacterList = ({ characters }) => {
+  return (
+    <div className="character-list">
+      {characters.map((character, index) => (
+        <CharacterCard key={index} character={character} index={index} />
+      ))}
+    </div>
+  );
+};
+
   // Extraer todas las especies únicas de los personajes
   const allSpecies = [...new Set(characters.map(character => character.species))];
 
