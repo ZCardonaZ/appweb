@@ -1,18 +1,20 @@
+/* REEMPLAZA TU ARCHIVO COMPLETO POR ESTO */
 .navbar {
   background-color: #fff;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   position: sticky;
   top: 0;
   z-index: 100;
+  padding: 0 2rem; /* Añadido */
 }
 
 .navbar-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
   max-width: 1200px;
   margin: 0 auto;
+  height: 60px; /* Altura fija */
 }
 
 .navbar-logo a {
@@ -26,27 +28,30 @@
   letter-spacing: 1px;
 }
 
+/* CAMBIOS PRINCIPALES AQUÍ */
 .navbar-links {
   display: flex;
-  gap: 2rem;
-  /* Añade estas 3 propiedades clave */
-  min-width: max-content;
-  align-items: center;
+  gap: 1.5rem;
   height: 100%;
+  align-items: center;
 }
 
 .navbar-links a {
   text-decoration: none;
   color: #333;
   font-weight: 500;
-  padding: 0.5rem 0;
-  position: relative;
-  transition: color 0.2s;
-  /* Añade estas propiedades */
-  display: inline-flex;
-  align-items: center;
-  height: 100%;
+  font-size: 1rem;
+  padding: 0.5rem 1rem; /* Más espacio */
+  display: inline-block; /* Cambiado */
   white-space: nowrap;
+  transition: all 0.2s;
+}
+
+/* Estilo para el enlace "Acerca de" específicamente */
+.navbar-links a[href="/about"] {
+  background-color: #3563E9;
+  color: white !important;
+  border-radius: 4px;
 }
 
 .navbar-links a:hover {
@@ -55,44 +60,31 @@
 
 .navbar-links a.active {
   color: #3563E9;
+  position: relative;
 }
 
 .navbar-links a.active::after {
   content: '';
   position: absolute;
   bottom: 0;
-  left: 0;
-  width: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
   height: 2px;
   background-color: #3563E9;
-  border-radius: 2px;
 }
 
-@media (max-width: 600px) {
-  .navbar-container {
-    flex-direction: column;
-    gap: 1rem;
-    padding: 1rem;
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0 1rem;
   }
   
   .navbar-links {
-    width: 100%;
-    justify-content: space-around;
+    gap: 0.75rem;
   }
-}
-
-
-/* Debug temporal - Forzar visibilidad */
-.navbar-links a:nth-child(3) {
-  background-color: #3563E9 !important;
-  color: white !important;
-  padding: 0.5rem 1rem !important;
-  border-radius: 4px !important;
-  animation: blink 1s infinite;
-}
-
-@keyframes blink {
-  0% { opacity: 1; }
-  50% { opacity: 0.5; }
-  100% { opacity: 1; }
+  
+  .navbar-links a {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
 }
