@@ -7,7 +7,7 @@ const CharacterCard = ({ character, index }) => {
   
   return (
     <Link 
-      to={`/characters/${index}`} 
+    to={`/characters/${character.id}`} 
       className="character-card"
       aria-label={`Ver detalles de ${fullName}`}
     >

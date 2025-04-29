@@ -1,51 +1,50 @@
-// components/Characters/CharacterDetail.jsx
+// CharacterDetail.jsx
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const CharacterDetail = ({ characters }) => {
+const CharacterDetail = () => {
   const { id } = useParams();
   const [character, setCharacter] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Buscar por índice numérico primero
-    const foundCharacter = characters.find((char, index) => 
-      index === parseInt(id)
-    ) || 
-    // Si no se encuentra por índice, buscar por ID (string o número)
-    characters.find(char => char.id == id); // Usamos == en lugar de === para comparación flexible
+    const fetchCharacter = async () => {
+      try {
+        const response = await fetch(`https://api.sampleapis.com/futurama/characters/${id}`);
+        if (!response.ok) throw new Error('Personaje no encontrado');
+        const data = await response.json();
+        setCharacter(data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    setCharacter(foundCharacter);
-    setLoading(false);
-  }, [id, characters]);
+    fetchCharacter();
+  }, [id]);
 
-  if (loading) {
-    return <div>Cargando...</div>;
-  }
+  if (loading) return <div>Cargando...</div>;
+  if (!character) return <div>Personaje no encontrado</div>;
 
-  if (!character) {
-    return (
-      <div className="error-message">
-        <h2>Personaje no encontrado</h2>
-        <Link to="/" className="back-button">Volver al listado</Link>
-      </div>
-    );
-  }
+  // Formatea el nombre completo
+  const fullName = `${character.name.first} ${character.name.middle || ''} ${character.name.last}`.trim();
 
   return (
     <div className="character-detail">
       <div className="character-image">
-        <img src={character.image} alt={character.name} />
+        <img 
+          src={character.images.main} 
+          alt={fullName}
+          onError={(e) => e.target.src = 'https://via.placeholder.com/150?text=No+Image'}
+        />
       </div>
       <div className="character-info">
-        <h2>{character.name}</h2>
+        <h2>{fullName}</h2>
         <p><strong>Especie:</strong> {character.species}</p>
         <p><strong>Género:</strong> {character.gender || 'Desconocido'}</p>
-        <p><strong>Estado:</strong> <span className={`status ${character.status?.toLowerCase()}`}>{character.status}</span></p>
-        <p><strong>Planeta:</strong> {character.origin?.name || 'Desconocido'}</p>
-        
-        {/* Botón para volver */}
+        <p><strong>Planeta:</strong> {character.homePlanet || 'Desconocido'}</p>
         <Link to="/" className="back-button">Volver al listado</Link>
       </div>
     </div>
