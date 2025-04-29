@@ -183,3 +183,50 @@ input, button, textarea, select {
   cursor: pointer;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
+
+/* Agrega esto a tu src/index.css */
+
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  border-radius: 30px;
+  padding: 8px 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 1000;
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+}
+
+.theme-icon {
+  font-size: 1.2rem;
+}
+
+.theme-text {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Solo muestra el icono en móviles */
+@media (max-width: 768px) {
+  .theme-toggle {
+    padding: 8px;
+    width: 40px;
+    height: 40px;
+    justify-content: center;
+  }
+  .theme-text {
+    display: none;
+  }
+}

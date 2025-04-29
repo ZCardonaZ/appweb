@@ -18,13 +18,21 @@ function App() {
 
   return (
     <div className={`app ${theme}`}>
-      <button 
-        onClick={toggleTheme} 
-        className="theme-toggle"
-        aria-label={`Cambiar a modo ${theme === 'light' ? 'oscuro' : 'claro'}`}
-      >
-        {theme === 'light' ? '🌙' : '☀️'}
-      </button>
+      {isLoggedIn && (
+        <button 
+          onClick={toggleTheme} 
+          className="theme-toggle"
+          aria-label={`Cambiar a modo ${theme === 'light' ? 'oscuro' : 'claro'}`}
+          title={`Cambiar a modo ${theme === 'light' ? 'oscuro' : 'claro'}`}
+        >
+          <span className="theme-icon">
+            {theme === 'light' ? '🌙' : '☀️'}
+          </span>
+          <span className="theme-text">
+            {theme === 'light' ? 'Modo Oscuro' : 'Modo Claro'}
+          </span>
+        </button>
+      )}
       
       <BrowserRouter>
         <Routes>
